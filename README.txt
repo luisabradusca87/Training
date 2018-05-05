@@ -1,0 +1,1 @@
+Training examples on JAVA EE projects (e.g. Servlet,  JSP, etc)
