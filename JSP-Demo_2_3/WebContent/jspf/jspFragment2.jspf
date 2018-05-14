@@ -1,0 +1,3 @@
+<h3>Content of a jsp fragement 2</h3>
+<%! int counter = 2; %>
+<h2>Value of counter inside fragment:<%=counter %></h2>
