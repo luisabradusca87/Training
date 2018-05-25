@@ -27,8 +27,7 @@
 	<br />
 	<br />
 	
-	<h2>Using custom tag library:</h2>
-		<tags:toUpperCase input=" lower-case text should be now all upper-case"/></h2>
+	
 	
 </body>
 </html>
