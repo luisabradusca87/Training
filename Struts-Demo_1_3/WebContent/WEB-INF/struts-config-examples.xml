@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+"http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+
+	<form-beans>
+		<form-bean name="helloForm" type="forms.HelloForm" />
+		<form-bean name="userForm" type="forms.UserForm" />
+		<form-bean name="userFormValidator" type="forms.UserFormValidatorFile" />
+	</form-beans>
+	<global-exceptions>
+		<exception key="error.duplicateKey" type="exceptions.DuplicateKeyException"
+			handler="exceptions.DuplicateKeyExceptionHandler" />
+	</global-exceptions>
+	<global-forwards>
+		<forward name="error" path="/examples/errorHandling.jsp" />
+	</global-forwards>
+	<action-mappings type="actionmappings.DisablingActionMapping">
+		<action path="/helloWorld" type="action.HelloAction" name="helloForm">
+			<forward name="success" path="/examples/hello.jsp" />
+		</action>
+
+		<action path="/helloWorldDisabled" type="action.HelloAction"
+			name="helloForm">
+			<set-property property="disabled" value="true" />
+			<exception key="error.duplicateKey" type="exceptions.DuplicateKeyException"
+				handler="exceptions.DuplicateKeyExceptionHandler" />
+			<forward name="success" path="/examples/hello.jsp" />
+			<forward name="underConstruction" path="/examples/underConstruction.jsp" />
+		</action>
+
+		<action path="/sayHelloWildcard*" type="action.SayHelloWildcard{1}"
+			name="helloForm">
+			<forward name="success" path="/examples/helloWildcard{1}.jsp" />
+		</action>
+
+		<action path="/saveToken" type="action.SaveTokenAction" name="helloForm">
+			<forward name="success" path="/examples/token.jsp" />
+		</action>
+
+		<action path="/tokenCheckDoubleForm" type="action.CheckTokenAction"
+			name="helloForm">
+			<forward name="success" path="/examples/tokenSuccess.jsp" />
+			<forward name="failure" path="/examples/token.jsp" />
+		</action>
+
+		<action path="/errorsExample" type="action.ErrorsExampleAction">
+			<forward name="success" path="/examples/errors.jsp" />
+		</action>
+
+		<action path="/saveUser" type="action.SaveUserAction" name="userForm" input="/examples//errorsFormExample.jsp">
+			<forward name="success" path="/examples/formValidated.jsp" />
+		</action>
+		
+		<action path="/saveUserValidatorFile" type="action.SaveUserAction" name="userFormValidator"
+			validate="true" input="/examples/errorsFormExampleValidatorFile.jsp">
+			<forward name="success" path="/examples/formValidated.jsp" />
+		</action>
+
+		<action path="/tagLibraries" type="action.TagLibrariesAction"
+			name="helloForm">
+			<forward name="success" path="/examples/tagLibraries.jsp" />
+		</action>
+
+		<action path="/dupplicateKeyException" type="action.DuplicateKeyExceptionAction">
+		</action>
+
+	</action-mappings>
+
+	<controller processorClass="processing.CustomRequestProcessor" />
+
+
+	<message-resources parameter="application" />
+
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+		<set-property property="pathnames"
+			value="/org/apache/struts/validator/validator-rules.xml,
+			/WEB-INF/validation.xml" />
+	</plug-in>
+
+</struts-config>
+ 
